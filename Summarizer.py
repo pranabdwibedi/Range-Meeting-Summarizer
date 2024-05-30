@@ -1,18 +1,18 @@
 import os
+import re
 import speech_recognition as sr
 from transformers import AutoTokenizer, AutoModelForSeq2SeqLM
-import re
 from pydub import AudioSegment
 
 # Function to preprocess the text entered
 def preprocess_text(text):
     # Remove unwanted characters and extra spaces
     text = re.sub(r'\s+', ' ', text)
-    # Remove filler words and irrelevant phrases (example)
+    # Remove filler words and irrelevant phrases
     filler_words = ["uh", "um", "you know", "like", "so", "basically", "actually"]
     for word in filler_words:
         text = text.replace(word, "")
-    return text
+    return text.strip()
 
 # Function to split audio into smaller chunks
 def split_audio(audio_file, chunk_length_ms=60000):
@@ -57,7 +57,7 @@ def summarize_text(text, model, tokenizer):
         return None
 
 def main():
-    audio_file = 'Project1/Meeting.wav'
+    audio_file = 'Meeting.wav'
     
     if not os.path.isfile(audio_file):
         print(f"File '{audio_file}' not found.")
@@ -83,11 +83,12 @@ def main():
     print("Preprocessed Text:\n", preprocessed_text)
     
     print("Chunking text for summarization...")
-    text_chunks = chunk_text(preprocessed_text)
+    # Splitting preprocessed text into chunks for summarization
+    text_chunks = [preprocessed_text[i:i + 512] for i in range(0, len(preprocessed_text), 512)]
     print(f"Text has been split into {len(text_chunks)} chunks.")
     
     print("Loading summarization model...")
-    local_dir = "Project1/t5-base"
+    local_dir = "t5-base"
     tokenizer = AutoTokenizer.from_pretrained(local_dir)
     model = AutoModelForSeq2SeqLM.from_pretrained(local_dir)
     
