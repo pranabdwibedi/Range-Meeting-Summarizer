@@ -4,7 +4,7 @@ from transformers import AutoTokenizer, AutoModelForSeq2SeqLM
 import re
 from pydub import AudioSegment
 
-# Function to preprocess the text
+# Function to preprocess the text entered
 def preprocess_text(text):
     # Remove unwanted characters and extra spaces
     text = re.sub(r'\s+', ' ', text)
