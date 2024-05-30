@@ -57,7 +57,7 @@ def summarize_text(text, model, tokenizer):
         return None
 
 def main():
-    audio_file = 'DRDO Internship/Python Project/Range-Meeting-Summarizer/videoplayback.wav'
+    audio_file = 'Project1/Meeting.wav'
     
     if not os.path.isfile(audio_file):
         print(f"File '{audio_file}' not found.")
@@ -87,7 +87,7 @@ def main():
     print(f"Text has been split into {len(text_chunks)} chunks.")
     
     print("Loading summarization model...")
-    local_dir = "Range-Meeting-Summarizer/t5-base"
+    local_dir = "Project1/t5-base"
     tokenizer = AutoTokenizer.from_pretrained(local_dir)
     model = AutoModelForSeq2SeqLM.from_pretrained(local_dir)
     
