@@ -74,7 +74,7 @@ def summarize_chunk(args):
     return summarize_text(chunk, model, tokenizer)
 
 def main():
-    audio_file = 'Meeting.wav'
+    audio_file = 'videoplayback.wav'
     
     if not os.path.isfile(audio_file):
         print(f"File '{audio_file}' not found.")
